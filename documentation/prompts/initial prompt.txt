@@ -1,0 +1,16 @@
+please create a new application with the following spec.
+
+Overview - application to connect to my Meta Ads library and allow me to build custom reports and tools to help me maximize performance of new and existing ads.
+
+initial tools:
+1) Ad creative analyzer - this tool should display all of the ad creative from our ads that fit a performance search criteria such as amount spent, CTR, ROAS, number of purchases, CPC, CPR, impressions, clicks, CTR, etc.
+2) Ad copy analyzer - this tool should do the same as above maybe it's the same view but just geared toward the copy that goes with the ads.  I want to be able to view all of the ad copy from our ads based on the same filters as above.
+3) with both tools, I should be able to export a report of the results. we probably want to have the filters also include a limit of results so it doesn't export everything. 
+4) with all views, I want to be able to filter and sort them by relevant metrics
+5) from the ad creative standpoint, I want to have a feature that generates a prompt that can be used with AI to generate other winning ad creative.  this tool should also help us generate a comprehensive brand creative guideline that can be given to AI as instruction for creative branding.
+6) from the ad copy side, I want to have a feature that generates a prompt that can be used with AI to generate other winning ad copy.  this tool should also help us generate a comprehensive brand copy/voice guideline that can be given to AI as instruction for creative branding.
+
+build spec:
+it should be built using a modern framework and we'll use supabase as the database.  make it look modern, clean, and easy to use.  eventually we'll integrate authentication and user accounts to secure the application.  it should be built to handle scale as we may eventually turn this into a Saas product that can be resold to other advertisers.
+
+app branding: use something modern.  I like white, black, blue, purple.  feel free to generate a temporary logo to use throughout.  the app will be called "Adalyzer"
