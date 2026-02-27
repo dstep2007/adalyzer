@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/admin";
-import { DEFAULT_ORG_ID } from "@/lib/utils";
+import { requireAuth } from "@/lib/auth/require-auth";
 
 export async function POST(request: NextRequest) {
-  const supabase = createAdminClient();
-  const orgId = DEFAULT_ORG_ID;
+  const auth = await requireAuth();
+  if (auth.error) return auth.error;
+  const { user, supabase } = auth;
+  const orgId = user.organization.id;
 
   const body = await request.json();
   const { accessToken, adAccountId, accountName } = body;
@@ -43,8 +44,10 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-  const supabase = createAdminClient();
-  const orgId = DEFAULT_ORG_ID;
+  const auth = await requireAuth();
+  if (auth.error) return auth.error;
+  const { user, supabase } = auth;
+  const orgId = user.organization.id;
 
   const { data, error } = await supabase
     .from("meta_connections")

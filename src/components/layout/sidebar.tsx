@@ -11,16 +11,18 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useAuth } from "@/hooks/use-auth";
 
 const navItems = [
   {
     label: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: LayoutDashboard,
   },
   {
@@ -53,6 +55,16 @@ const navItems = [
 export function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const { user, organization, signOut } = useAuth();
+
+  const initials = user?.fullName
+    ? user.fullName
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : user?.email?.slice(0, 2).toUpperCase() ?? "";
 
   return (
     <aside
@@ -62,7 +74,7 @@ export function Sidebar() {
       )}
     >
       <div className="flex h-16 items-center justify-between border-b border-border px-4">
-        <Logo collapsed={collapsed} />
+        <Logo collapsed={collapsed} href="/dashboard" />
         <Button
           variant="ghost"
           size="icon"
@@ -80,8 +92,8 @@ export function Sidebar() {
       <nav className="flex-1 space-y-1 p-3">
         {navItems.map((item) => {
           const isActive =
-            item.href === "/"
-              ? pathname === "/"
+            item.href === "/dashboard"
+              ? pathname === "/dashboard"
               : pathname.startsWith(item.href);
 
           return (
@@ -104,14 +116,42 @@ export function Sidebar() {
       </nav>
 
       <div className="border-t border-border p-3">
-        {!collapsed && (
-          <div className="rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 p-3">
-            <p className="text-xs font-medium text-muted-foreground">
-              Adalyzer v1.0
-            </p>
-            <p className="text-xs text-muted-foreground/70">
-              Meta Ads Analytics
-            </p>
+        {collapsed ? (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-9 w-9"
+            onClick={signOut}
+            title="Sign out"
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
+        ) : (
+          <div className="space-y-3">
+            <div className="flex items-center gap-3 rounded-lg px-2">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+                {initials}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium">
+                  {user?.fullName || user?.email}
+                </p>
+                {organization && (
+                  <p className="truncate text-xs text-muted-foreground">
+                    {organization.name}
+                  </p>
+                )}
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full justify-start gap-2 text-muted-foreground"
+              onClick={signOut}
+            >
+              <LogOut className="h-4 w-4" />
+              Sign out
+            </Button>
           </div>
         )}
       </div>

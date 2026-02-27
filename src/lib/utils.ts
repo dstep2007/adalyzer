@@ -53,6 +53,3 @@ export function getMetricColor(field: MetricField, value: number): string {
   if (isCostMetric) return "text-muted-foreground";
   return "text-foreground";
 }
-
-// For MVP: hardcoded org ID. Will be replaced with auth-based org resolution.
-export const DEFAULT_ORG_ID = "00000000-0000-0000-0000-000000000001";

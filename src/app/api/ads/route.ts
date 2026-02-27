@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/admin";
-import { DEFAULT_ORG_ID } from "@/lib/utils";
+import { requireAuth } from "@/lib/auth/require-auth";
 import { MetricField } from "@/types/filters";
 
 const VALID_SORT_FIELDS: MetricField[] = [
@@ -9,8 +8,10 @@ const VALID_SORT_FIELDS: MetricField[] = [
 ];
 
 export async function GET(request: NextRequest) {
-  const supabase = createAdminClient();
-  const orgId = DEFAULT_ORG_ID;
+  const auth = await requireAuth();
+  if (auth.error) return auth.error;
+  const { user, supabase } = auth;
+  const orgId = user.organization.id;
   const params = request.nextUrl.searchParams;
 
   const sortBy = (params.get("sortBy") as MetricField) || "spend";

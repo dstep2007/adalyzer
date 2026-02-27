@@ -1,8 +1,14 @@
 import Link from "next/link";
 
-export function Logo({ collapsed = false }: { collapsed?: boolean }) {
+export function Logo({
+  collapsed = false,
+  href = "/",
+}: {
+  collapsed?: boolean;
+  href?: string;
+}) {
   return (
-    <Link href="/" className="flex items-center gap-2.5">
+    <Link href={href} className="flex items-center gap-2.5">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 40 40"

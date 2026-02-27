@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireAuth } from "@/lib/auth/require-auth";
 import { MetaApiClient } from "@/lib/meta/client";
 import { MetaAdAccount } from "@/lib/meta/types";
 
 export async function GET(request: NextRequest) {
+  const auth = await requireAuth();
+  if (auth.error) return auth.error;
+
   const token = request.nextUrl.searchParams.get("token");
 
   if (!token) {

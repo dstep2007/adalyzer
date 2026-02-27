@@ -1,9 +1,39 @@
+export type OrgRole = "owner" | "admin" | "member";
+
 export interface Organization {
   id: string;
   name: string;
   slug: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  is_super_admin: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OrganizationMember {
+  id: string;
+  organization_id: string;
+  user_id: string;
+  role: OrgRole;
+  created_at: string;
+}
+
+export interface AuthUser {
+  id: string;
+  email: string;
+  fullName: string | null;
+  avatarUrl: string | null;
+  isSuperAdmin: boolean;
+  organization: Organization;
+  role: OrgRole;
 }
 
 export interface MetaConnection {

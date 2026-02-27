@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { requireAuth } from "@/lib/auth/require-auth";
 import { syncAdAccount } from "@/lib/meta/sync";
-import { DEFAULT_ORG_ID } from "@/lib/utils";
 
 export async function POST() {
-  const supabase = createAdminClient();
-  const orgId = DEFAULT_ORG_ID;
+  const auth = await requireAuth();
+  if (auth.error) return auth.error;
+  const { user, supabase } = auth;
+  const orgId = user.organization.id;
 
   // Get active meta connection
   const { data: connection, error: connError } = await supabase
@@ -38,6 +39,7 @@ export async function POST() {
   }
 
   // Run sync (non-blocking - returns immediately)
+  // Note: sync uses admin client internally for background writes
   syncAdAccount(orgId, connection.ad_account_id, connection.access_token)
     .catch((err) => console.error("Sync failed:", err));
 

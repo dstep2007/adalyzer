@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/admin";
-import { DEFAULT_ORG_ID } from "@/lib/utils";
+import { requireAuth } from "@/lib/auth/require-auth";
 
 export async function GET() {
-  const supabase = createAdminClient();
-  const orgId = DEFAULT_ORG_ID;
+  const auth = await requireAuth();
+  if (auth.error) return auth.error;
+  const { user, supabase } = auth;
+  const orgId = user.organization.id;
 
   // Get connection info
   const { data: connection } = await supabase
