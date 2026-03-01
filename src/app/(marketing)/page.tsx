@@ -93,9 +93,17 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6 text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
+      <section className="hero-bg relative overflow-hidden py-24 sm:py-32">
+        {/* Decorative glow orbs */}
+        <div className="glow-orb -top-24 left-1/4 h-96 w-96 bg-blue-500/10" />
+        <div className="glow-orb -bottom-24 right-1/4 h-80 w-80 bg-purple-500/10" />
+
+        <div className="relative mx-auto max-w-6xl px-6 text-center">
+          <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
+            <Sparkles className="h-3.5 w-3.5" />
+            Meta Ads analytics, simplified
+          </div>
+          <h1 className="text-5xl font-bold tracking-tight sm:text-7xl">
             Analyze your Meta Ads.
             <br />
             <span className="brand-gradient-text">Scale what works.</span>
@@ -107,12 +115,12 @@ export default function HomePage() {
           </p>
           <div className="mt-10 flex items-center justify-center gap-4">
             <Link href="/signup">
-              <Button size="lg" className="px-8">
+              <Button size="lg" className="brand-gradient px-8 text-white shadow-lg shadow-primary/25 transition-shadow hover:shadow-xl hover:shadow-primary/30">
                 Get started free
               </Button>
             </Link>
             <Link href="/login">
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" className="px-8">
                 Sign in
               </Button>
             </Link>
@@ -121,12 +129,12 @@ export default function HomePage() {
       </section>
 
       {/* Product Screenshot / Demo Placeholder */}
-      <section className="border-t border-border bg-muted/30 py-16">
+      <section className="relative -mt-8 pb-16 sm:-mt-12">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="flex aspect-video items-center justify-center rounded-xl border border-border bg-muted/50 shadow-sm">
+          <div className="gradient-border flex aspect-video items-center justify-center rounded-xl border-0 bg-background shadow-2xl shadow-primary/10">
             <div className="text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                <Play className="h-7 w-7 text-primary" />
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full brand-gradient shadow-lg shadow-primary/25">
+                <Play className="h-7 w-7 text-white" />
               </div>
               <p className="text-sm font-medium text-muted-foreground">
                 Product demo video
@@ -140,8 +148,9 @@ export default function HomePage() {
       </section>
 
       {/* Pain Points */}
-      <section className="py-20">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="section-gradient-1 relative overflow-hidden py-20">
+        <div className="dot-pattern absolute inset-0" />
+        <div className="relative mx-auto max-w-6xl px-6">
           <h2 className="text-center text-2xl font-bold sm:text-3xl">
             Sound familiar?
           </h2>
@@ -151,7 +160,7 @@ export default function HomePage() {
           </p>
           <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
             {painPoints.map((point) => (
-              <Card key={point.title} className="border-border/50">
+              <Card key={point.title} className="gradient-border border-0 bg-background/80 backdrop-blur-sm transition-shadow hover:shadow-lg hover:shadow-primary/5">
                 <CardContent className="pt-6">
                   <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-destructive/10">
                     <point.icon className="h-5 w-5 text-destructive" />
@@ -167,25 +176,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Transition */}
-      <section className="border-t border-border bg-muted/30 py-20">
-        <div className="mx-auto max-w-3xl px-6 text-center">
-          <h2 className="text-2xl font-bold sm:text-3xl">
+      {/* Transition — bold gradient banner */}
+      <section className="brand-gradient-bg relative overflow-hidden py-20">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA3KSIvPjwvc3ZnPg==')] opacity-50" />
+        <div className="relative mx-auto max-w-3xl px-6 text-center">
+          <h2 className="text-2xl font-bold text-white sm:text-3xl">
             Meta Ads Manager wasn&apos;t built for this.
             <br />
-            <span className="brand-gradient-text">Adalyzer was.</span>
+            <span className="text-white/80">Adalyzer was.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+          <p className="mx-auto mt-4 max-w-2xl text-blue-100/80">
             Adalyzer pulls your ad data into a single, clean interface designed
             for one thing: helping you figure out what&apos;s working and do more
             of it. No more spreadsheets. No more guesswork.
           </p>
+          <Link href="/signup">
+            <Button size="lg" variant="secondary" className="mt-8 px-8 shadow-lg">
+              See how it works
+            </Button>
+          </Link>
         </div>
       </section>
 
       {/* Features */}
-      <section className="py-20">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="section-gradient-2 relative overflow-hidden py-20">
+        <div className="glow-orb -right-32 top-1/2 h-72 w-72 bg-purple-500/8" />
+        <div className="relative mx-auto max-w-6xl px-6">
           <h2 className="text-center text-2xl font-bold sm:text-3xl">
             Everything you need to optimize your ads
           </h2>
@@ -194,10 +210,10 @@ export default function HomePage() {
           </p>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
             {features.map((feature) => (
-              <Card key={feature.title} className="border-border/50">
+              <Card key={feature.title} className="gradient-border border-0 bg-background/80 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/5">
                 <CardContent className="flex gap-4 pt-6">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                    <feature.icon className="h-5 w-5 text-primary" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg brand-gradient shadow-sm shadow-primary/20">
+                    <feature.icon className="h-5 w-5 text-white" />
                   </div>
                   <div>
                     <h3 className="font-semibold">{feature.title}</h3>
@@ -211,7 +227,7 @@ export default function HomePage() {
           </div>
 
           {/* Feature Screenshot Placeholder */}
-          <div className="mt-16 flex aspect-video items-center justify-center rounded-xl border border-border bg-muted/50 shadow-sm">
+          <div className="gradient-border mt-16 flex aspect-video items-center justify-center rounded-xl border-0 bg-background shadow-xl shadow-primary/10">
             <div className="text-center">
               <p className="text-sm font-medium text-muted-foreground">
                 Dashboard screenshot
@@ -225,8 +241,9 @@ export default function HomePage() {
       </section>
 
       {/* How It Works */}
-      <section className="border-t border-border bg-muted/30 py-20">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="relative overflow-hidden border-t border-border py-20">
+        <div className="dot-pattern absolute inset-0" />
+        <div className="relative mx-auto max-w-6xl px-6">
           <h2 className="text-center text-2xl font-bold sm:text-3xl">
             Up and running in minutes
           </h2>
@@ -234,9 +251,12 @@ export default function HomePage() {
             No complex setup. No CSV uploads. Just connect and go.
           </p>
           <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-3">
-            {steps.map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary font-bold text-primary-foreground">
+            {steps.map((item, i) => (
+              <div key={item.step} className="relative text-center">
+                {i < steps.length - 1 && (
+                  <div className="absolute left-1/2 top-6 hidden h-px w-full bg-linear-to-r from-primary/30 to-purple-500/30 sm:block" />
+                )}
+                <div className="relative mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full brand-gradient font-bold text-white shadow-lg shadow-primary/25">
                   {item.step}
                 </div>
                 <h3 className="font-semibold">{item.title}</h3>
@@ -250,13 +270,15 @@ export default function HomePage() {
       </section>
 
       {/* Who It's For */}
-      <section className="py-20">
+      <section className="section-gradient-1 py-20">
         <div className="mx-auto max-w-6xl px-6">
           <h2 className="text-center text-2xl font-bold sm:text-3xl">
-            Built for brands and agencies
+            Built for{" "}
+            <span className="brand-gradient-text">brands</span> and{" "}
+            <span className="brand-gradient-text">agencies</span>
           </h2>
           <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
-            <Card className="border-border/50">
+            <Card className="gradient-border border-0 bg-background/80 backdrop-blur-sm">
               <CardContent className="pt-6">
                 <h3 className="text-lg font-semibold">For brands & DTC teams</h3>
                 <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
@@ -279,7 +301,7 @@ export default function HomePage() {
                 </ul>
               </CardContent>
             </Card>
-            <Card className="border-border/50">
+            <Card className="gradient-border border-0 bg-background/80 backdrop-blur-sm">
               <CardContent className="pt-6">
                 <h3 className="text-lg font-semibold">For agencies</h3>
                 <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
@@ -307,16 +329,18 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-border bg-muted/30 py-20">
-        <div className="mx-auto max-w-6xl px-6 text-center">
-          <h2 className="text-2xl font-bold sm:text-3xl">
+      <section className="brand-gradient-bg relative overflow-hidden py-20">
+        <div className="glow-orb -bottom-20 -left-20 h-60 w-60 bg-white/10" />
+        <div className="glow-orb -right-20 -top-20 h-60 w-60 bg-white/10" />
+        <div className="relative mx-auto max-w-6xl px-6 text-center">
+          <h2 className="text-2xl font-bold text-white sm:text-3xl">
             Ready to find your winning ads?
           </h2>
-          <p className="mx-auto mt-3 max-w-md text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-md text-blue-100/80">
             Create your account and connect your Meta Ads in under 5 minutes.
           </p>
           <Link href="/signup">
-            <Button size="lg" className="mt-8 px-8">
+            <Button size="lg" variant="secondary" className="mt-8 px-8 shadow-lg transition-transform hover:scale-105">
               Create your account
             </Button>
           </Link>

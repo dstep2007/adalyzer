@@ -131,7 +131,7 @@
   }
 }
 
-/* Adalyzer brand gradient utility */
+/* Adalyzer brand gradient utilities */
 .brand-gradient {
   background: linear-gradient(135deg, #3B82F6, #8B5CF6);
 }
@@ -141,4 +141,86 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Subtle mesh/grain background for hero and accent sections */
+.hero-bg {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.12), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(139, 92, 246, 0.08), transparent),
+    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(59, 130, 246, 0.06), transparent);
+}
+
+.dark .hero-bg {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.15), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(139, 92, 246, 0.1), transparent),
+    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(59, 130, 246, 0.08), transparent);
+}
+
+/* Gradient section backgrounds */
+.section-gradient-1 {
+  background:
+    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(139, 92, 246, 0.06), transparent),
+    radial-gradient(ellipse 50% 60% at 0% 100%, rgba(59, 130, 246, 0.06), transparent);
+}
+
+.dark .section-gradient-1 {
+  background:
+    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(139, 92, 246, 0.08), transparent),
+    radial-gradient(ellipse 50% 60% at 0% 100%, rgba(59, 130, 246, 0.08), transparent);
+}
+
+.section-gradient-2 {
+  background:
+    radial-gradient(ellipse 60% 50% at 0% 0%, rgba(59, 130, 246, 0.06), transparent),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(139, 92, 246, 0.06), transparent);
+}
+
+.dark .section-gradient-2 {
+  background:
+    radial-gradient(ellipse 60% 50% at 0% 0%, rgba(59, 130, 246, 0.08), transparent),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(139, 92, 246, 0.08), transparent);
+}
+
+/* Bold gradient banner for transition/CTA sections */
+.brand-gradient-bg {
+  background: linear-gradient(135deg, #3B82F6, #6D5CF6, #8B5CF6);
+}
+
+/* Gradient border effect for cards */
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3));
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Decorative glow orb */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+/* Subtle dot pattern overlay */
+.dot-pattern {
+  background-image: radial-gradient(rgba(59, 130, 246, 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dark .dot-pattern {
+  background-image: radial-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px);
 }
