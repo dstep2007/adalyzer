@@ -28,7 +28,7 @@ function LoginForm() {
   const [error, setError] = useState(
     callbackError === "auth_callback_failed"
       ? "Authentication failed. Please try again."
-      : ""
+      : "",
   );
   const [loading, setLoading] = useState(false);
 
@@ -92,7 +92,7 @@ function LoginForm() {
             />
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col gap-4">
+        <CardFooter className="flex flex-col gap-4 pt-4">
           <Button type="submit" className="w-full" disabled={loading}>
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Sign in

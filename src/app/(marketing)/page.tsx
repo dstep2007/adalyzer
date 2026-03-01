@@ -6,10 +6,11 @@ import {
   Image,
   FileText,
   Sparkles,
-  Search,
-  Clock,
-  Users,
-  Megaphone,
+  TrendingDown,
+  EyeOff,
+  Hourglass,
+  MessageSquareWarning,
+  Shuffle,
   ArrowRight,
   Play,
 } from "lucide-react";
@@ -43,25 +44,25 @@ const features = [
 
 const painPoints = [
   {
-    icon: Search,
+    icon: EyeOff,
     title: "You can't tell which ad copy is actually winning",
     description:
       "Meta Ads Manager buries copy performance across campaigns, ad sets, and ads. You're left scrolling through dozens of tabs, exporting spreadsheets, and manually comparing results. By the time you figure out what's working, you've already wasted budget on underperformers.",
   },
   {
-    icon: Clock,
+    icon: Hourglass,
     title: "You're spending hours in Ads Manager instead of optimizing",
     description:
       "Every week you spend hours digging through Meta's interface trying to pull insights. Filtering, exporting, cross-referencing — it's a full-time job just to answer \"which ads should I scale?\" That's time you could spend on strategy and creative.",
   },
   {
-    icon: Megaphone,
+    icon: MessageSquareWarning,
     title: "Your agency doesn't nail your brand voice",
     description:
       "You've hired an agency to run ads, but the copy they write doesn't sound like your brand. You keep going back and forth on revisions, but without a clear reference for what works, it's hard to give actionable feedback. You need a data-backed style guide, not another subjective opinion.",
   },
   {
-    icon: Users,
+    icon: Shuffle,
     title: "You manage multiple brands and can't context-switch fast enough",
     description:
       "As an agency, you juggle ad accounts across multiple clients. Each brand has its own voice, audience, and winning formula. Switching between them is mentally exhausting, and it's easy to accidentally write copy that sounds like the wrong brand.",
@@ -151,19 +152,24 @@ export default function HomePage() {
       <section className="section-gradient-1 relative overflow-hidden py-20">
         <div className="dot-pattern absolute inset-0" />
         <div className="relative mx-auto max-w-6xl px-6">
-          <h2 className="text-center text-2xl font-bold sm:text-3xl">
-            Sound familiar?
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">
-            If you&apos;re running Meta Ads — whether in-house or through an
-            agency — you&apos;ve probably hit one of these walls.
-          </p>
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500/10">
+              <TrendingDown className="h-7 w-7 text-amber-500" />
+            </div>
+            <h2 className="text-2xl font-bold sm:text-3xl">
+              Sound familiar?
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+              If you&apos;re running Meta Ads — whether in-house or through an
+              agency — you&apos;ve probably hit one of these walls.
+            </p>
+          </div>
           <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
             {painPoints.map((point) => (
               <Card key={point.title} className="gradient-border border-0 bg-background/80 backdrop-blur-sm transition-shadow hover:shadow-lg hover:shadow-primary/5">
                 <CardContent className="pt-6">
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-destructive/10">
-                    <point.icon className="h-5 w-5 text-destructive" />
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/10">
+                    <point.icon className="h-5 w-5 text-amber-600 dark:text-amber-400" />
                   </div>
                   <h3 className="font-semibold">{point.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
