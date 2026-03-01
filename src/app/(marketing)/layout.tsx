@@ -31,7 +31,7 @@ export default function MarketingLayout({
         <div className="mx-auto max-w-6xl px-6">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-muted-foreground">
-              Adalyzer by Little Thread Co.
+              &copy; Adalyzer {new Date().getFullYear()}
             </p>
             <div className="flex gap-6">
               <Link

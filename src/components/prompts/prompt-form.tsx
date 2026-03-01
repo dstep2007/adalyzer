@@ -18,10 +18,18 @@ import { PromptType } from "@/types/prompts";
 interface PromptFormProps {
   promptType: PromptType;
   apiEndpoint: string;
-  onResult: (data: { prompt: string; sourceAdCount: number; averageMetrics: { spend: number; roas: number; ctr: number; cpc: number } }) => void;
+  onResult: (data: {
+    prompt: string;
+    sourceAdCount: number;
+    averageMetrics: { spend: number; roas: number; ctr: number; cpc: number };
+  }) => void;
 }
 
-export function PromptForm({ promptType, apiEndpoint, onResult }: PromptFormProps) {
+export function PromptForm({
+  promptType,
+  apiEndpoint,
+  onResult,
+}: PromptFormProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [options, setOptions] = useState({
     brandName: "",
@@ -41,7 +49,7 @@ export function PromptForm({ promptType, apiEndpoint, onResult }: PromptFormProp
         body: JSON.stringify({
           promptType,
           options: Object.fromEntries(
-            Object.entries(options).filter(([, v]) => v.trim() !== "")
+            Object.entries(options).filter(([, v]) => v.trim() !== ""),
           ),
         }),
       });
@@ -54,7 +62,8 @@ export function PromptForm({ promptType, apiEndpoint, onResult }: PromptFormProp
       const data = await res.json();
       onResult(data);
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Generation failed";
+      const message =
+        error instanceof Error ? error.message : "Generation failed";
       alert(message);
     } finally {
       setIsGenerating(false);
@@ -69,9 +78,11 @@ export function PromptForm({ promptType, apiEndpoint, onResult }: PromptFormProp
         <div className="space-y-2">
           <Label>Brand Name</Label>
           <Input
-            placeholder="e.g., Little Thread Co"
+            placeholder="e.g., Acme Clothing Co"
             value={options.brandName}
-            onChange={(e) => setOptions((o) => ({ ...o, brandName: e.target.value }))}
+            onChange={(e) =>
+              setOptions((o) => ({ ...o, brandName: e.target.value }))
+            }
           />
         </div>
 
@@ -80,7 +91,9 @@ export function PromptForm({ promptType, apiEndpoint, onResult }: PromptFormProp
           <Input
             placeholder="e.g., children's clothing"
             value={options.productType}
-            onChange={(e) => setOptions((o) => ({ ...o, productType: e.target.value }))}
+            onChange={(e) =>
+              setOptions((o) => ({ ...o, productType: e.target.value }))
+            }
           />
         </div>
 
@@ -89,7 +102,9 @@ export function PromptForm({ promptType, apiEndpoint, onResult }: PromptFormProp
           <Input
             placeholder="e.g., parents of kids aged 2-10"
             value={options.targetAudience}
-            onChange={(e) => setOptions((o) => ({ ...o, targetAudience: e.target.value }))}
+            onChange={(e) =>
+              setOptions((o) => ({ ...o, targetAudience: e.target.value }))
+            }
           />
         </div>
 
@@ -98,7 +113,9 @@ export function PromptForm({ promptType, apiEndpoint, onResult }: PromptFormProp
             <Label>Tone / Voice</Label>
             <Select
               value={options.tone}
-              onValueChange={(value) => setOptions((o) => ({ ...o, tone: value }))}
+              onValueChange={(value) =>
+                setOptions((o) => ({ ...o, tone: value }))
+              }
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select tone..." />
@@ -109,7 +126,9 @@ export function PromptForm({ promptType, apiEndpoint, onResult }: PromptFormProp
                 <SelectItem value="playful">Playful & Fun</SelectItem>
                 <SelectItem value="luxurious">Luxurious & Premium</SelectItem>
                 <SelectItem value="urgent">Urgent & Action-Oriented</SelectItem>
-                <SelectItem value="educational">Educational & Informative</SelectItem>
+                <SelectItem value="educational">
+                  Educational & Informative
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -120,7 +139,9 @@ export function PromptForm({ promptType, apiEndpoint, onResult }: PromptFormProp
             <Label>Platform</Label>
             <Select
               value={options.platform}
-              onValueChange={(value) => setOptions((o) => ({ ...o, platform: value }))}
+              onValueChange={(value) =>
+                setOptions((o) => ({ ...o, platform: value }))
+              }
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select platform..." />
@@ -128,9 +149,13 @@ export function PromptForm({ promptType, apiEndpoint, onResult }: PromptFormProp
               <SelectContent>
                 <SelectItem value="Facebook Feed">Facebook Feed</SelectItem>
                 <SelectItem value="Instagram Feed">Instagram Feed</SelectItem>
-                <SelectItem value="Instagram Stories">Instagram Stories</SelectItem>
+                <SelectItem value="Instagram Stories">
+                  Instagram Stories
+                </SelectItem>
                 <SelectItem value="Instagram Reels">Instagram Reels</SelectItem>
-                <SelectItem value="Facebook Stories">Facebook Stories</SelectItem>
+                <SelectItem value="Facebook Stories">
+                  Facebook Stories
+                </SelectItem>
                 <SelectItem value="All Placements">All Placements</SelectItem>
               </SelectContent>
             </Select>
@@ -143,7 +168,9 @@ export function PromptForm({ promptType, apiEndpoint, onResult }: PromptFormProp
         <Textarea
           placeholder="Any additional instructions or context for the AI prompt..."
           value={options.additionalContext}
-          onChange={(e) => setOptions((o) => ({ ...o, additionalContext: e.target.value }))}
+          onChange={(e) =>
+            setOptions((o) => ({ ...o, additionalContext: e.target.value }))
+          }
           rows={3}
         />
       </div>
