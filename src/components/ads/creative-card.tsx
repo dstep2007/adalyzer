@@ -24,7 +24,7 @@ export function CreativeCard({ ad, onClick }: CreativeCardProps) {
       <div className="relative aspect-video bg-muted">
         {hasImage ? (
           <img
-            src={ad.thumbnail_url || ad.image_url || ""}
+            src={ad.image_url || ad.thumbnail_url || ""}
             alt={ad.name || "Ad creative"}
             className="h-full w-full object-cover"
             loading="lazy"

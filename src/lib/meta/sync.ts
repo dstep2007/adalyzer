@@ -46,9 +46,9 @@ function extractCreativeFields(ad: MetaAd) {
     null;
   const link_url = linkData?.link || creative.link_url || null;
 
-  // Extract image/video URLs
+  // Extract image/video URLs — prefer full-res effective_image_url
   const thumbnail_url = creative.thumbnail_url || linkData?.picture || videoData?.image_url || null;
-  const image_url = creative.image_url || linkData?.picture || null;
+  const image_url = creative.effective_image_url || creative.image_url || linkData?.picture || null;
   const video_url = null; // Video URLs need a separate API call; thumbnail is used for now
 
   return {

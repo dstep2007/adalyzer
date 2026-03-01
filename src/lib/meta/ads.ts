@@ -8,7 +8,7 @@ const AD_FIELDS = [
   "adset_id",
   "campaign_id",
   "created_time",
-  "creative{id,thumbnail_url,image_url,video_id,body,title,link_url,call_to_action_type,object_story_spec}",
+  "creative{id,thumbnail_url,image_url,effective_image_url,video_id,body,title,link_url,call_to_action_type,object_story_spec}",
 ].join(",");
 
 const CAMPAIGN_FIELDS = "id,name,status,objective";

@@ -12,6 +12,7 @@ export interface MetaAdCreative {
   id: string;
   thumbnail_url?: string;
   image_url?: string;
+  effective_image_url?: string;
   video_id?: string;
   body?: string;
   title?: string;
