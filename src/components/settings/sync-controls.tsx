@@ -1,14 +1,38 @@
 "use client";
 
-import { RefreshCw, Database, Clock, AlertCircle } from "lucide-react";
+import { RefreshCw, Database, Clock, AlertCircle, CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useSyncStatus } from "@/hooks/use-sync-status";
 import { toast } from "sonner";
 
+function formatRelativeTime(dateStr: string): string {
+  const date = new Date(dateStr);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return "Just now";
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  if (diffDays < 7) return `${diffDays}d ago`;
+  return date.toLocaleDateString();
+}
+
 export function SyncControls() {
-  const { lastSyncedAt, isSyncing, adCount, connectionConfigured, triggerSync } = useSyncStatus();
+  const {
+    lastSyncedAt,
+    isSyncing,
+    adCount,
+    connectionConfigured,
+    lastSyncStatus,
+    lastSyncError,
+    lastSyncAdsSynced,
+    triggerSync,
+  } = useSyncStatus();
 
   const handleSync = async () => {
     try {
@@ -43,7 +67,7 @@ export function SyncControls() {
             <div>
               <p className="text-sm font-medium">
                 {lastSyncedAt
-                  ? new Date(lastSyncedAt).toLocaleDateString()
+                  ? formatRelativeTime(lastSyncedAt)
                   : "Never"}
               </p>
               <p className="text-xs text-muted-foreground">Last synced</p>
@@ -51,14 +75,50 @@ export function SyncControls() {
           </div>
 
           <div className="flex items-center gap-3 rounded-lg border p-3">
-            <AlertCircle className="h-5 w-5 text-primary" />
+            {lastSyncStatus === "running" ? (
+              <Loader2 className="h-5 w-5 text-blue-500 animate-spin" />
+            ) : lastSyncStatus === "completed" ? (
+              <CheckCircle2 className="h-5 w-5 text-green-500" />
+            ) : lastSyncStatus === "failed" ? (
+              <XCircle className="h-5 w-5 text-destructive" />
+            ) : (
+              <AlertCircle className="h-5 w-5 text-muted-foreground" />
+            )}
             <div>
-              <Badge variant={connectionConfigured ? "default" : "secondary"}>
-                {connectionConfigured ? "Connected" : "Not connected"}
+              <Badge
+                variant={
+                  lastSyncStatus === "completed"
+                    ? "default"
+                    : lastSyncStatus === "failed"
+                      ? "destructive"
+                      : lastSyncStatus === "running"
+                        ? "secondary"
+                        : "outline"
+                }
+              >
+                {lastSyncStatus === "running"
+                  ? "Syncing"
+                  : lastSyncStatus === "completed"
+                    ? `Synced ${lastSyncAdsSynced ?? ""} ads`
+                    : lastSyncStatus === "failed"
+                      ? "Failed"
+                      : "No syncs yet"}
               </Badge>
             </div>
           </div>
         </div>
+
+        {lastSyncStatus === "failed" && lastSyncError && (
+          <div className="flex items-start gap-2 rounded-lg border border-destructive/50 bg-destructive/5 p-3">
+            <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-destructive">Sync failed</p>
+              <p className="mt-0.5 text-xs text-muted-foreground wrap-break-word">
+                {lastSyncError}
+              </p>
+            </div>
+          </div>
+        )}
 
         <Button
           onClick={handleSync}
@@ -66,7 +126,7 @@ export function SyncControls() {
           className="w-full"
         >
           <RefreshCw className={`mr-2 h-4 w-4 ${isSyncing ? "animate-spin" : ""}`} />
-          {isSyncing ? "Syncing..." : "Sync Now"}
+          {isSyncing ? "Syncing..." : lastSyncStatus === "failed" ? "Retry Sync" : "Sync Now"}
         </Button>
 
         {!connectionConfigured && (

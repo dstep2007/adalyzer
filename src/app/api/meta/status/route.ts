@@ -15,12 +15,13 @@ export async function GET() {
     .eq("is_active", true)
     .single();
 
-  // Check for running sync
-  const { data: runningSync } = await supabase
+  // Get the most recent sync log entry
+  const { data: lastSync } = await supabase
     .from("sync_log")
-    .select("id")
+    .select("id, status, error_message, ads_synced, started_at, completed_at")
     .eq("organization_id", orgId)
-    .eq("status", "running")
+    .order("created_at", { ascending: false })
+    .limit(1)
     .single();
 
   // Count ads
@@ -31,8 +32,13 @@ export async function GET() {
 
   return NextResponse.json({
     lastSyncedAt: connection?.last_synced_at || null,
-    isSyncing: !!runningSync,
+    isSyncing: lastSync?.status === "running",
     adCount: count || 0,
     connectionConfigured: !!connection,
+    lastSyncStatus: lastSync?.status || null,
+    lastSyncError: lastSync?.error_message || null,
+    lastSyncAdsSynced: lastSync?.ads_synced || null,
+    lastSyncStartedAt: lastSync?.started_at || null,
+    lastSyncCompletedAt: lastSync?.completed_at || null,
   });
 }

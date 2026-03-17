@@ -7,6 +7,11 @@ interface SyncStatus {
   isSyncing: boolean;
   adCount: number;
   connectionConfigured: boolean;
+  lastSyncStatus: "pending" | "running" | "completed" | "failed" | null;
+  lastSyncError: string | null;
+  lastSyncAdsSynced: number | null;
+  lastSyncStartedAt: string | null;
+  lastSyncCompletedAt: string | null;
 }
 
 const fetcher = async (url: string) => {
@@ -40,6 +45,11 @@ export function useSyncStatus() {
     isSyncing: data?.isSyncing ?? false,
     adCount: data?.adCount ?? 0,
     connectionConfigured: data?.connectionConfigured ?? false,
+    lastSyncStatus: data?.lastSyncStatus ?? null,
+    lastSyncError: data?.lastSyncError ?? null,
+    lastSyncAdsSynced: data?.lastSyncAdsSynced ?? null,
+    lastSyncStartedAt: data?.lastSyncStartedAt ?? null,
+    lastSyncCompletedAt: data?.lastSyncCompletedAt ?? null,
     isLoading,
     isError: !!error,
     triggerSync,
