@@ -10,7 +10,7 @@ export async function GET() {
   // Get connection info
   const { data: connection } = await supabase
     .from("meta_connections")
-    .select("last_synced_at, ad_account_id")
+    .select("last_synced_at, ad_account_id, token_expires_at")
     .eq("organization_id", orgId)
     .eq("is_active", true)
     .single();
@@ -40,5 +40,6 @@ export async function GET() {
     lastSyncAdsSynced: lastSync?.ads_synced || null,
     lastSyncStartedAt: lastSync?.started_at || null,
     lastSyncCompletedAt: lastSync?.completed_at || null,
+    tokenExpiresAt: connection?.token_expires_at || null,
   });
 }

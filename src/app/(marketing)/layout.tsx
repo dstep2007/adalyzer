@@ -35,6 +35,18 @@ export default function MarketingLayout({
             </p>
             <div className="flex gap-6">
               <Link
+                href="/privacy"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                Privacy
+              </Link>
+              <Link
+                href="/terms"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                Terms
+              </Link>
+              <Link
                 href="/login"
                 className="text-sm text-muted-foreground hover:text-foreground"
               >

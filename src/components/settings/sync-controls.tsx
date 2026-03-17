@@ -1,6 +1,6 @@
 "use client";
 
-import { RefreshCw, Database, Clock, AlertCircle, CheckCircle2, XCircle, Loader2 } from "lucide-react";
+import { RefreshCw, Database, Clock, AlertCircle, CheckCircle2, XCircle, Loader2, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -31,8 +31,11 @@ export function SyncControls() {
     lastSyncStatus,
     lastSyncError,
     lastSyncAdsSynced,
+    tokenExpiresAt,
     triggerSync,
   } = useSyncStatus();
+
+  const tokenExpired = tokenExpiresAt ? new Date(tokenExpiresAt) <= new Date() : false;
 
   const handleSync = async () => {
     try {
@@ -120,9 +123,21 @@ export function SyncControls() {
           </div>
         )}
 
+        {tokenExpired && (
+          <div className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 p-3">
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
+            <div>
+              <p className="text-sm font-medium text-amber-800">Token expired</p>
+              <p className="mt-0.5 text-xs text-amber-600">
+                Your Meta access token has expired. Reconnect in the settings above to continue syncing.
+              </p>
+            </div>
+          </div>
+        )}
+
         <Button
           onClick={handleSync}
-          disabled={isSyncing || !connectionConfigured}
+          disabled={isSyncing || !connectionConfigured || tokenExpired}
           className="w-full"
         >
           <RefreshCw className={`mr-2 h-4 w-4 ${isSyncing ? "animate-spin" : ""}`} />

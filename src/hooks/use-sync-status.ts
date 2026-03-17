@@ -12,6 +12,7 @@ interface SyncStatus {
   lastSyncAdsSynced: number | null;
   lastSyncStartedAt: string | null;
   lastSyncCompletedAt: string | null;
+  tokenExpiresAt: string | null;
 }
 
 const fetcher = async (url: string) => {
@@ -50,6 +51,7 @@ export function useSyncStatus() {
     lastSyncAdsSynced: data?.lastSyncAdsSynced ?? null,
     lastSyncStartedAt: data?.lastSyncStartedAt ?? null,
     lastSyncCompletedAt: data?.lastSyncCompletedAt ?? null,
+    tokenExpiresAt: data?.tokenExpiresAt ?? null,
     isLoading,
     isError: !!error,
     triggerSync,

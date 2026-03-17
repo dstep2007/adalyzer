@@ -7,7 +7,16 @@ export async function GET(request: NextRequest) {
   const auth = await requireAuth();
   if (auth.error) return auth.error;
 
-  const token = request.nextUrl.searchParams.get("token");
+  const fromCookie = request.nextUrl.searchParams.get("from_cookie");
+  let token: string | null = null;
+
+  if (fromCookie === "true") {
+    const { cookies } = await import("next/headers");
+    const cookieStore = await cookies();
+    token = cookieStore.get("meta_oauth_token")?.value || null;
+  } else {
+    token = request.nextUrl.searchParams.get("token");
+  }
 
   if (!token) {
     return NextResponse.json({ error: "Access token required" }, { status: 400 });

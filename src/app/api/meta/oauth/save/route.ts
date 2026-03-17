@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { requireAuth } from "@/lib/auth/require-auth";
 
 export async function POST(request: NextRequest) {
@@ -7,17 +8,28 @@ export async function POST(request: NextRequest) {
   const { user, supabase } = auth;
   const orgId = user.organization.id;
 
-  const body = await request.json();
-  const { accessToken, adAccountId, accountName, tokenExpiresAt } = body;
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("meta_oauth_token")?.value;
+  const tokenExpiresAt = cookieStore.get("meta_oauth_token_expires_at")?.value;
 
-  if (!accessToken || !adAccountId) {
+  if (!accessToken) {
     return NextResponse.json(
-      { error: "Access token and ad account ID are required" },
+      { error: "OAuth session expired. Please connect with Meta again." },
       { status: 400 }
     );
   }
 
-  // Deactivate any existing connections for this org
+  const body = await request.json();
+  const { adAccountId, accountName } = body;
+
+  if (!adAccountId) {
+    return NextResponse.json(
+      { error: "Ad account ID is required" },
+      { status: 400 }
+    );
+  }
+
+  // Deactivate existing connections
   await supabase
     .from("meta_connections")
     .update({ is_active: false, updated_at: new Date().toISOString() })
@@ -29,7 +41,7 @@ export async function POST(request: NextRequest) {
       organization_id: orgId,
       ad_account_id: adAccountId,
       access_token: accessToken,
-      account_name: accountName,
+      account_name: accountName || null,
       is_active: true,
       token_expires_at: tokenExpiresAt || null,
       updated_at: new Date().toISOString(),
@@ -41,25 +53,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
+  // Clear the temporary cookies
+  cookieStore.delete("meta_oauth_token");
+  cookieStore.delete("meta_oauth_token_expires_at");
+
   return NextResponse.json({ success: true });
-}
-
-export async function GET() {
-  const auth = await requireAuth();
-  if (auth.error) return auth.error;
-  const { user, supabase } = auth;
-  const orgId = user.organization.id;
-
-  const { data, error } = await supabase
-    .from("meta_connections")
-    .select("ad_account_id, account_name, last_synced_at, is_active, token_expires_at")
-    .eq("organization_id", orgId)
-    .eq("is_active", true)
-    .single();
-
-  if (error || !data) {
-    return NextResponse.json({ connection: null });
-  }
-
-  return NextResponse.json({ connection: data });
 }
