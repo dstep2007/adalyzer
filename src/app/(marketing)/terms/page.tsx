@@ -258,6 +258,13 @@ export default function TermsOfServicePage() {
             <Link href="/privacy" className="underline hover:text-foreground">
               Privacy Policy
             </Link>
+            . For detailed instructions on how to delete your data, see our{" "}
+            <Link
+              href="/data-deletion"
+              className="underline hover:text-foreground"
+            >
+              Data Deletion Instructions
+            </Link>
             .
           </p>
 

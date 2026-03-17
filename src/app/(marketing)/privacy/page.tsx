@@ -339,7 +339,14 @@ export default function PrivacyPolicyPage() {
             </li>
             <li>
               <strong>Deletion:</strong> request deletion of your personal data
-              and Meta data.
+              and Meta data. See our{" "}
+              <Link
+                href="/data-deletion"
+                className="underline hover:text-foreground"
+              >
+                Data Deletion Instructions
+              </Link>{" "}
+              for step-by-step guidance.
             </li>
             <li>
               <strong>Data portability:</strong> request your data in a
