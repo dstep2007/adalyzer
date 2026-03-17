@@ -1,7 +1,7 @@
 import { MetaApiResponse } from "./types";
 
 const META_API_BASE = process.env.META_API_BASE_URL || "https://graph.facebook.com";
-const META_API_VERSION = process.env.META_API_VERSION || "v21.0";
+const META_API_VERSION = process.env.META_API_VERSION || "v25.0";
 
 export class MetaApiClient {
   private accessToken: string;

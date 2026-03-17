@@ -1,5 +1,5 @@
 const META_API_BASE = process.env.META_API_BASE_URL || "https://graph.facebook.com";
-const META_API_VERSION = process.env.META_API_VERSION || "v21.0";
+const META_API_VERSION = process.env.META_API_VERSION || "v25.0";
 const META_APP_ID = process.env.NEXT_PUBLIC_META_APP_ID!;
 const META_APP_SECRET = process.env.META_APP_SECRET!;
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
