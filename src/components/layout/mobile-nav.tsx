@@ -2,32 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  Image,
-  FileText,
-  Sparkles,
-  Wand2,
-  Settings,
-  LogOut,
-} from "lucide-react";
+import { LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
-
-const navItems = [
-  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Creatives", href: "/creatives", icon: Image },
-  { label: "Ad Copy", href: "/copy", icon: FileText },
-  { label: "Creative Prompts", href: "/prompts/creative", icon: Sparkles },
-  { label: "Copy Prompts", href: "/prompts/copy", icon: Wand2 },
-  { label: "Settings", href: "/settings", icon: Settings },
-];
+import { navItems } from "@/lib/nav-items";
 
 export function MobileNav() {
   const pathname = usePathname();
-  const { user, organization, signOut } = useAuth();
+  const { user, organization, role, signOut } = useAuth();
 
   return (
     <div className="flex h-full flex-col">
@@ -35,11 +19,15 @@ export function MobileNav() {
         <Logo href="/dashboard" />
       </div>
       <nav className="flex-1 space-y-1 p-3">
-        {navItems.map((item) => {
+        {navItems
+          .filter((item) => !item.roles || (role && item.roles.includes(role)))
+          .map((item) => {
           const isActive =
             item.href === "/dashboard"
               ? pathname === "/dashboard"
-              : pathname.startsWith(item.href);
+              : item.href === "/settings"
+                ? pathname === "/settings"
+                : pathname.startsWith(item.href);
 
           return (
             <Link

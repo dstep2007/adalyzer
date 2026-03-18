@@ -52,6 +52,7 @@ export async function requireAuth(): Promise<AuthSuccess | AuthFailure> {
     .from("organization_members")
     .select("role, organizations(*)")
     .eq("user_id", user.id)
+    .eq("is_active", true)
     .limit(1)
     .single();
 

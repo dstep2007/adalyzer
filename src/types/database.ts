@@ -23,7 +23,21 @@ export interface OrganizationMember {
   organization_id: string;
   user_id: string;
   role: OrgRole;
+  is_active: boolean;
+  deactivated_at: string | null;
   created_at: string;
+}
+
+export interface TeamMember {
+  id: string;
+  user_id: string;
+  role: OrgRole;
+  is_active: boolean;
+  deactivated_at: string | null;
+  created_at: string;
+  email: string;
+  full_name: string | null;
+  avatar_url: string | null;
 }
 
 export interface AuthUser {
