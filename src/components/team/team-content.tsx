@@ -46,6 +46,26 @@ export function TeamContent() {
     [mutate]
   );
 
+  const handleResetPassword = useCallback(
+    async (member: TeamMember) => {
+      try {
+        const res = await fetch(`/api/users/${member.id}/reset-password`, {
+          method: "POST",
+        });
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.error || "Failed to send password reset");
+        }
+        toast.success(`Password reset email sent to ${member.email}`);
+      } catch (err) {
+        toast.error(
+          err instanceof Error ? err.message : "Failed to send password reset"
+        );
+      }
+    },
+    []
+  );
+
   const handleDeactivate = useCallback(
     async (member: TeamMember) => {
       try {
@@ -108,6 +128,7 @@ export function TeamContent() {
           currentUserId={user?.id ?? ""}
           currentUserRole={role ?? "member"}
           onEditRole={canManage ? setEditTarget : undefined}
+          onResetPassword={canManage ? handleResetPassword : undefined}
           onDeactivate={canManage ? setDeactivateTarget : undefined}
           onReactivate={canManage ? handleReactivate : undefined}
         />

@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
     // Invite new user via Supabase Auth
     const { data: inviteData, error: inviteError } =
       await adminClient.auth.admin.inviteUserByEmail(email, {
-        redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/login`,
+        redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/set-password`,
       });
 
     if (inviteError) {

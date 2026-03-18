@@ -17,7 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, ShieldCheck, Shield, User, UserX, UserCheck } from "lucide-react";
+import { MoreHorizontal, ShieldCheck, Shield, User, UserX, UserCheck, KeyRound } from "lucide-react";
 import type { TeamMember, OrgRole } from "@/types/database";
 
 const ROLE_CONFIG: Record<OrgRole, { label: string; variant: "default" | "secondary" | "outline" }> = {
@@ -50,6 +50,7 @@ interface TeamTableProps {
   currentUserId: string;
   currentUserRole: OrgRole;
   onEditRole?: (member: TeamMember) => void;
+  onResetPassword?: (member: TeamMember) => void;
   onDeactivate?: (member: TeamMember) => void;
   onReactivate?: (member: TeamMember) => void;
 }
@@ -59,6 +60,7 @@ export function TeamTable({
   currentUserId,
   currentUserRole,
   onEditRole,
+  onResetPassword,
   onDeactivate,
   onReactivate,
 }: TeamTableProps) {
@@ -159,6 +161,12 @@ export function TeamTable({
                             <DropdownMenuItem onClick={() => onEditRole(member)}>
                               <Shield className="mr-2 h-4 w-4" />
                               Change Role
+                            </DropdownMenuItem>
+                          )}
+                          {member.is_active && onResetPassword && (
+                            <DropdownMenuItem onClick={() => onResetPassword(member)}>
+                              <KeyRound className="mr-2 h-4 w-4" />
+                              Send Password Reset
                             </DropdownMenuItem>
                           )}
                           {member.is_active && onDeactivate && (
